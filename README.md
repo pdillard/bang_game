@@ -1,1 +1,1 @@
-# bandg_game
+# bang_game
