@@ -9,7 +9,7 @@ class Player:
         self.ammo = ammo
         self.move = move
 
-player1 = Player("Steve", 100, 0, None)
+player1 = Player("You", 100, 0, None)
 player2 = Player("John", 100, 0, None)
 
 
@@ -47,20 +47,24 @@ def attack(attacker, defender):
     if attacker.ammo >= 1 and defender.move not in [1, 2, "block"]:
         defender.health -= 50
         attacker.ammo -= 1
+        print(f"{attacker.name} attacks")
         return print(f"{defender.name} has {defender.health} health!")
     elif attacker.ammo == 0:
         return print("no ammo")
     else:
+        attacker.ammo -= 1
         return print("blocked!")
     
 def block(Player):
     Player.move = "block"
-    return print(f"{Player.name} block")
+    return print(f"{Player.name} blocks")
 
 def load(Player):
     Player.move = "load"
     if Player.ammo < 3:
         Player.ammo += 1
+        return print(f"{Player.name} loads")
+
     else:
         return print("no effect")
 
@@ -75,7 +79,7 @@ def cpu_move_rng(Player):
         else:
             break
         
-    print(move)
+    #print(move)
 
     if move in [1, 2]:
         Player.move = "block"
@@ -87,7 +91,15 @@ def cpu_move_rng(Player):
         print("error")
     pass
 
+def replay_ask():
+    replay = input("Play again? (yes/no) ")
+    if replay.strip().lower() == "yes":
+        return "yes"
+    if replay.strip().lower() == "no":
+        return "no"
+
 while True:
+    print("_________________________________")
     cpu_move_rng(player2)
     # p2_move = random.randint(1, 4)
     # print(p2_move)
@@ -128,6 +140,35 @@ while True:
     else:
         print("error")
 
+    if player2.health <= 0 and player1.health <= 0:
+        print("TIE!")
+        replay = input("Play again? (yes/no) ")
+        if replay.strip().lower() == "yes":
+            player1 = Player("Steve", 100, 0, None)
+            player2 = Player("John", 100, 0, None)
+            pass
+        if replay.strip().lower() == "no":
+            break
+    elif player2.health <= 0:
+        print("YOU WIN!")
+        replay = input("Play again? (yes/no) ")
+        if replay.strip().lower() == "yes":
+            player1 = Player("Steve", 100, 0, None)
+            player2 = Player("John", 100, 0, None)
+            pass
+        if replay.strip().lower() == "no":
+            break
+    elif player1.health <= 0:
+        print ("YOU LOSE")
+        replay = input("Play again? (yes/no) ")
+        if replay.strip().lower() == "yes":
+            player1 = Player("Steve", 100, 0, None)
+            player2 = Player("John", 100, 0, None)
+            pass
+        if replay.strip().lower() == "no":
+            break
+    else:
+        pass
 
 
 # root = tk.Tk()
