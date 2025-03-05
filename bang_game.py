@@ -3,14 +3,14 @@ import tkinter
 
 class Player:
     
-    def __init__(self, name:str, health:int, ammo:int):
+    def __init__(self, name:str, health:int, ammo:int, move:str):
         self.name = name
         self.health = health
         self.ammo = ammo
+        self.move = move
 
-
-player1 = Player("Steve", 100, 3)
-player2 = Player("John", 100, 3)
+player1 = Player("Steve", 100, 3, None)
+player2 = Player("John", 100, 3, None)
 
 
 def input_phase(Player):
@@ -41,5 +41,12 @@ def input_phase(Player):
                 print("no effect")
         else: 
             print("invalid input")
+
+def attack(attacker, defender):
+    if attacker.ammo >= 1 and defender.move not in [1, 2, "block"]:
+        defender.health -= 25
+        attacker.ammo -= 1
+        print(f"")
+
 
 input_phase(player1)
