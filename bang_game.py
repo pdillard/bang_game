@@ -98,7 +98,10 @@ def replay_ask():
     if replay.strip().lower() == "no":
         return "no"
 
+player1.name = input("Name: ")
+
 while True:
+
     print("_________________________________")
     cpu_move_rng(player2)
     # p2_move = random.randint(1, 4)
@@ -146,6 +149,7 @@ while True:
         if replay.strip().lower() == "yes":
             player1 = Player("Steve", 100, 0, None)
             player2 = Player("John", 100, 0, None)
+            player1.name = input("Name: ")
             pass
         if replay.strip().lower() == "no":
             break
@@ -155,6 +159,7 @@ while True:
         if replay.strip().lower() == "yes":
             player1 = Player("Steve", 100, 0, None)
             player2 = Player("John", 100, 0, None)
+            player1.name = input("Name: ")
             pass
         if replay.strip().lower() == "no":
             break
@@ -164,6 +169,7 @@ while True:
         if replay.strip().lower() == "yes":
             player1 = Player("Steve", 100, 0, None)
             player2 = Player("John", 100, 0, None)
+            player1.name = input("Name: ")
             pass
         if replay.strip().lower() == "no":
             break
