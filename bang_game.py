@@ -74,7 +74,7 @@ def cpu_move_rng(Player):
     while True:
         if Player.ammo >= 3 and move == 4:
             move = random.randint(1, 4)
-        elif Player.ammo == 0 and move == 3:
+        elif Player.ammo == 0 and move in [3, 5]:
             move = random.randint(1, 4)
         else:
             break
@@ -83,7 +83,7 @@ def cpu_move_rng(Player):
 
     if move in [1, 2]:
         Player.move = "block"
-    elif move == 3:
+    elif move in [3, 5]:
         Player.move = "attack"
     elif move == 4:
         Player.move = "load"
