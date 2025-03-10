@@ -45,7 +45,7 @@ player2 = Player("John", 100, 0, None)
 def attack(attacker, defender):
     attacker.move = "attack"
     if attacker.ammo >= 1 and defender.move not in [1, 2, "block"]:
-        defender.health -= 50
+        defender.health -= 100
         attacker.ammo -= 1
         print(f"{attacker.name} attacks")
         return print(f"{defender.name} has {defender.health} health!")
