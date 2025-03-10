@@ -90,7 +90,7 @@ player1.name = input("Name: ")
 while True:
 
     print("_________________________________")
-    if player1.ammo == 0:
+    if player1.ammo == 0 and player2.ammo < 2:
         player2.move = "load"
     else:
         cpu_move_rng(player2)
