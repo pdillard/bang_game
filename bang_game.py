@@ -1,5 +1,25 @@
 import random
-import tkinter as tk
+import pygame
+
+WIDTH = 600
+HEIGHT = 400
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+RED = (0, 0, 255)
+BLUE = (0, 155, 255)
+GREEN = (0, 255, 0)
+
+# screen = pygame.display.set_mode(WIDTH, HEIGHT)
+# pygame.display.set_caption("Bang Game")
+
+# font = pygame.font.Font(None, 40)
+
+# attack_button = pygame.Rect(50, 300, 100, 50)
+# block_button = pygame.Rect(200, 300, 100, 50)
+# load_button = pygame.Rect(350, 300, 100, 50)
+# restart_button = pygame.Rect(450, 300, 120, 50)
+
+
 
 class Player:
     
@@ -11,36 +31,6 @@ class Player:
 
 player1 = Player("You", 100, 0, None)
 player2 = Player("John", 100, 0, None)
-
-
-# def input_phase(Player):
-#     while True:
-#         p2_move = random.randint(1, 4)
-#         print(p2_move)
-#         command = input("Your move: ")
-#         if command.lower().strip() == "attack":
-#             if Player.ammo >= 1 and p2_move not in [1, 2]:
-#                 player2.health -= 25
-#                 player1.ammo -= 1
-#                 print(f"{player2.name} has {player2.health} health")
-#                 if player2.health <= 0:
-#                     print(f"{player2.name} is dead")
-#                     break
-#             elif Player.ammo >= 1 and p2_move in [1, 2]:
-#                 player1.ammo -= 1
-#                 print("John blocked!")
-#             else:
-#                 print("no ammo")
-#         elif command.lower().strip() == "block":
-#             pass
-#         elif command.lower().strip() == "load":
-#             if Player.ammo < 3:
-#                 player1.ammo += 1
-#                 print("loaded")
-#             else:
-#                 print("no effect")
-#         else: 
-#             print("invalid input")
 
 def attack(attacker, defender):
     attacker.move = "attack"
@@ -68,25 +58,18 @@ def load(Player):
     else:
         return print("no effect")
 
-def cpu_move_rng(Player, first_turn = False, has_ammo = False):
-    if first_turn or has_ammo:
-        valid_moves = [1, 2, 4]
-    else: 
-        valid_moves = [1, 2, 3] if Player.ammo == 0 else [1, 2, 4] if Player.ammo >= 3 else [1, 2, 3]
+def cpu_move_rng(Player):
+    
+    move = random.randint(1, 5)
 
-    move = random.choice(valid_moves)
-
-    # move = random.randint(1, 4)
-  
     while True:
+
         if Player.ammo >= 3 and move == 4:
-            move = random.randint(1, 4)
+            move = random.randint(1, 5)
         elif Player.ammo == 0 and move == 3:
-            move = random.randint(1, 4)
+            move = random.randint(1, 5)
         else:
             break
-        
-    #print(move)
 
     if move in [1, 2]:
         Player.move = "block"
@@ -94,8 +77,6 @@ def cpu_move_rng(Player, first_turn = False, has_ammo = False):
         Player.move = "attack"
     elif move == 4:
         Player.move = "load"
-    else:
-        print("error")
 
 def replay_ask():
     replay = input("Play again? (yes/no) ")
@@ -109,7 +90,10 @@ player1.name = input("Name: ")
 while True:
 
     print("_________________________________")
-    cpu_move_rng(player2)
+    if player1.ammo == 0:
+        player2.move = "load"
+    else:
+        cpu_move_rng(player2)
 
     command = input("Your move: ")
     player1.move = command.strip().lower()
@@ -128,8 +112,10 @@ while True:
         block(player2)
     elif player2.move == "load":
         load(player2)
+    elif player2.move == None:
+        print("did not generate")
     else:
-        print("error")
+        print("cpu error")
 
     if player2.health <= 0 and player1.health <= 0:
         print("TIE!")
@@ -163,13 +149,3 @@ while True:
             break
     else:
         pass
-
-
-# root = tk.Tk()
-# root.title("Bang Game)
-# root.geometry("350x350")
-
-# def on_click():
-    # pass
-
-# btn = tk.button(root, text = "")
