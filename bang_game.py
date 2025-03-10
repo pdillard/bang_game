@@ -96,17 +96,7 @@ def cpu_move_rng(Player, first_turn = False, has_ammo = False):
         Player.move = "load"
     else:
         print("error")
-    
 
-<<<<<<< HEAD
-first_turn = True
-has_ammo = True
-
-while player1.health > 0 and player2.health > 0:
-    cpu_move_rng(player2, first_turn)
-    first_turn = False
-    has_ammo = False
-=======
 def replay_ask():
     replay = input("Play again? (yes/no) ")
     if replay.strip().lower() == "yes":
@@ -120,26 +110,7 @@ while True:
 
     print("_________________________________")
     cpu_move_rng(player2)
->>>>>>> 76f4426fd3915f9e8f0d74b2930af95148adc568
-    # p2_move = random.randint(1, 4)
-    # print(p2_move)
-    # while True:
-    #     if player2.ammo >= 3 and p2_move == 4:
-    #         p2_move = random.randint(1, 4)
-    #     elif player2.ammo == 0 and p2_move == 3:
-    #         p2_move = random.randint(1, 4)
-    #     else:
-    #         break
 
-    # if p2_move in [1, 2]:
-    #     player2.move = "block"
-    # elif p2_move == 3:
-    #     player2.move = "attack"
-    # elif p2_move == 4:
-    #     player2.move = "load"
-    # else:
-    #     print("error")
-    
     command = input("Your move: ")
     player1.move = command.strip().lower()
     if player1.move == "attack":
