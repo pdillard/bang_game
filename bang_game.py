@@ -159,4 +159,4 @@ while True:
     if player1.health <= 0 or player2.health <= 0:
         if replay_ask() == "no":
             break
-        player1, player2 = Player(input("Enter your name: ")), Player("John")
+        player1, player2 = Player(input("Enter your name: "), 100, 0, None), Player("John", 100, 0, None)
