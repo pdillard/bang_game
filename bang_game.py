@@ -117,38 +117,6 @@ while True:
     else:
         print("cpu error")
 
-    # if player2.health <= 0 and player1.health <= 0:
-    #     print("TIE!")
-    #     replay = input("Play again? (yes/no) ")
-    #     if replay.strip().lower() == "yes":
-    #         player1 = Player("Steve", 100, 0, None)
-    #         player2 = Player("John", 100, 0, None)
-    #         player1.name = input("Name: ")
-    #         pass
-    #     if replay.strip().lower() == "no":
-    #         break
-    # elif player2.health <= 0:
-    #     print("YOU WIN!")
-    #     replay = input("Play again? (yes/no) ")
-    #     if replay.strip().lower() == "yes":
-    #         player1 = Player("Steve", 100, 0, None)
-    #         player2 = Player("John", 100, 0, None)
-    #         player1.name = input("Name: ")
-    #         pass
-    #     if replay.strip().lower() == "no":
-    #         break
-    # elif player1.health <= 0:
-    #     print ("YOU LOSE")
-    #     replay = input("Play again? (yes/no) ")
-    #     if replay.strip().lower() == "yes":
-    #         player1 = Player("Steve", 100, 0, None)
-    #         player2 = Player("John", 100, 0, None)
-    #         player1.name = input("Name: ")
-    #         pass
-    #     if replay.strip().lower() == "no":
-    #         break
-    # else:
-    #     pass
     if player1.health <= 0 and player2.health <= 0:
         print("It's a tie!")
     elif player2.health <= 0:
