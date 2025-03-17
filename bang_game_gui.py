@@ -94,22 +94,25 @@ def load(Player):
         return print("no effect")
 
 def cpu_move_rng(player2):
-    move = random.randint(1, 5)
-
-    while True:
-        if player2.ammo == 0 and move in [3, 5]:  
-            move = random.randint(1, 5) 
-        elif player2.ammo >= 3 and move == 4:  
-            move = random.randint(1, 5)  
-        else:
-            break  
-
-    if move in [1, 2]:
-        player2.move = "block"
-    elif move in [3, 5]:
-        player2.move = "attack"
-    elif move == 4:
+    if player1.ammo == 0 and player2.ammo < 2:
         player2.move = "load"
+    else:
+        move = random.randint(1, 5)
+
+        while True:
+            if player2.ammo == 0 and move in [3, 5]:  
+                move = random.randint(1, 5) 
+            elif player2.ammo >= 3 and move == 4:  
+                move = random.randint(1, 5)  
+            else:
+                break  
+
+        if move in [1, 2]:
+            player2.move = "block"
+        elif move in [3, 5]:
+            player2.move = "attack"
+        elif move == 4:
+            player2.move = "load"
 
 def replay_ask():
     while True:
