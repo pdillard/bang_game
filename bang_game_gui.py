@@ -94,7 +94,7 @@ def load(Player):
         return print("no effect")
 
 def cpu_move_rng(player2):
-    if player1.ammo == 0 and player2.ammo < 2:
+    if player1.ammo == 0 and player2.ammo < 1:
         player2.move = "load"
     else:
         move = random.randint(1, 5)
