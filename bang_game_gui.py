@@ -151,7 +151,7 @@ while running:
                 game_over = True
         elif event.type == pygame.MOUSEBUTTONDOWN and game_over:
             if restart_button.collidepoint(event.pos):
-                player1 = Player("You", 100, 0, None)
+                player1 = Player(player1.name, 100, 0, None)
                 player2 = Player("John", 100, 0, None)
                 game_over = False
 
