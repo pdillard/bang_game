@@ -24,8 +24,6 @@ restart_button = pygame.Rect(450, 300, 120, 50)
 name_input_box = pygame.Rect(200, 150, 200, 50)
 
 
-game_over = False
-running = True
 name_input_mode = True
 player_name = ""
 game_messages = []
@@ -107,6 +105,76 @@ def cpu_move():
     else:
         move = random.choice(["block", "attack", "load"])
         player2.move = move
+
+def menu_screen():
+    menu_running = True
+    while menu_running:
+        screen.fill(WHITE)
+
+        title_text = FONT.render("Bang Game", True, BLACK)
+        screen.blit(title_text, (WIDTH // 2 - title_text.get_width() // 2, 50))
+
+        start_button = pygame.Rect(WIDTH // 2 - 75, 150, 150, 50)
+        instructions_button = pygame.Rect(WIDTH // 2 - 75, 220, 150, 50)
+        quit_button = pygame.Rect(WIDTH // 2 - 75, 290, 150, 50)
+
+        pygame.draw.rect(screen, GREEN, start_button)
+        pygame.draw.rect(screen, BLUE, instructions_button)
+        pygame.draw.rect(screen, RED, quit_button)
+
+        screen.blit(FONT.render("Start", True, WHITE), (start_button.x + 40, start_button.y + 10))
+        screen.blit(FONT.render("Instructions", True, WHITE), (instructions_button.x + 10, instructions_button.y + 10))
+        screen.blit(FONT.render("Quit", True, WHITE), (quit_button.x + 40, quit_button.y + 10))
+
+        pygame.display.flip()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if start_button.collidepoint(event.pos):
+                    menu_running = False
+                elif instructions_button.collidepoint(event.pos):
+                    instructions_screen()
+                elif quit_button.collidepoint(event.pos):
+                    pygame.quit()
+                    exit()
+
+def instructions_screen():
+    instructions_running = True
+    while instructions_running:
+        screen.fill(WHITE)
+        
+        instructions = [
+            "How to Play:",
+            "Attack: Use bullets to damage the CPU.",
+            "Block: Prevents CPU from attacking you.",
+            "Load: Gain more bullets for attack.",
+            "First to reach 0 HP loses!"
+        ]
+
+        for i, text in enumerate(instructions):
+            screen.blit(FONT.render(text, True, BLACK), (50, 50 + i * 50))
+
+        back_button = pygame.Rect(WIDTH // 2 - 50, 300, 100, 50)
+        pygame.draw.rect(screen, RED, back_button)
+        screen.blit(FONT.render("Back", True, WHITE), (back_button.x + 20, back_button.y + 10))
+
+        pygame.display.flip()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN and back_button.collidepoint(event.pos):
+                instructions_running = False
+
+
+menu_screen()
+
+game_over = False
+running = True
 
 while running:
     screen.fill(WHITE)
