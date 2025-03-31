@@ -28,12 +28,23 @@ name_input_mode = True
 player_name = ""
 game_messages = []
 
-class Player:
+
+sprite_image = pygame.image.load("you_load.png")
+
+
+class Player(pygame.sprite.Sprite):
     def __init__(self, name, health, ammo, move):
         self.name = name
         self.health = health
         self.ammo = ammo
         self.move = move
+        super().__init__()
+        self.image = pygame.image.load("you_load.png").convert_alpha()
+        self.rect = self.image.get_rect()
+        self.rect.topleft = (200, 200)
+
+
+
 
 player1 = Player("", 100, 0, None)
 player2 = Player("John", 100, 0, None)
@@ -192,6 +203,7 @@ while running:
         draw_text(player_name, (name_input_box.x + 10, name_input_box.y + 10))
     else:
         game_screen()
+        screen.blit(sprite_image, (100,150))
 
     pygame.display.flip()
 
