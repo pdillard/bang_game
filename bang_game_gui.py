@@ -102,16 +102,13 @@ def load(player):
 def cpu_move():
     moves = ["block", "attack", "load"]
     if player2.ammo == 0:
-        moves = ["block, load"]
+        moves = ["block", "load"]
 
     if player2.ammo == 3:
-        moves = ["block, attack"]
+        moves = ["block", "attack"]
 
-    if player1.ammo < 3 and player2.ammo < 2:
-        player2.move = "load"
-    else:
-        move = random.choice(moves)
-        player2.move = move
+    move = random.choice(moves)
+    player2.move = move
 
 def menu_screen():
     menu_running = True
@@ -211,6 +208,9 @@ while running:
                     player_name += event.unicode
 
         elif not game_over:
+            
+            cpu_move()
+
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if attack_button.collidepoint(event.pos):
                     attack(player1, player2)
@@ -219,7 +219,7 @@ while running:
                 elif load_button.collidepoint(event.pos):
                     load(player1)
 
-                cpu_move()
+
                 if player2.move == "attack":
                     attack(player2, player1)
                 elif player2.move == "block":
