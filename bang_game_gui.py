@@ -100,10 +100,17 @@ def load(player):
         add_message(f"{player.name} can't load more ammo!")
 
 def cpu_move():
-    if player1.ammo == 0 and player2.ammo < 1:
+    moves = ["block", "attack", "load"]
+    if player2.ammo == 0:
+        moves = ["block, load"]
+
+    if player2.ammo == 3:
+        moves = ["block, attack"]
+
+    if player1.ammo < 3 and player2.ammo < 2:
         player2.move = "load"
     else:
-        move = random.choice(["block", "attack", "load"])
+        move = random.choice(moves)
         player2.move = move
 
 def menu_screen():
