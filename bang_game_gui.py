@@ -28,8 +28,9 @@ name_input_mode = True
 player_name = ""
 game_messages = []
 
-
-sprite_image = pygame.image.load("you_load.png")
+sprite_org = pygame.image.load("still_icon.png")
+sprite_scale = pygame.transform.scale(sprite_org, (150,150))
+sprite_image = pygame.transform.flip(sprite_scale, True, False)
 
 
 class Player(pygame.sprite.Sprite):
@@ -39,9 +40,9 @@ class Player(pygame.sprite.Sprite):
         self.ammo = ammo
         self.move = move
         super().__init__()
-        self.image = pygame.image.load("you_load.png").convert_alpha()
+        self.image = pygame.image.load("still_icon.png").convert_alpha()
         self.rect = self.image.get_rect()
-        self.rect.topleft = (200, 200)
+        self.rect.topleft = (100, 100)
 
 
 
