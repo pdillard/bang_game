@@ -3,7 +3,6 @@ import pygame
 
 pygame.init()
 
-
 WIDTH = 600
 HEIGHT = 400
 WHITE = (255, 255, 255)
@@ -16,22 +15,19 @@ FONT = pygame.font.Font(None, 40)
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Bang Game")
 
-
 attack_button = pygame.Rect(50, 300, 100, 50)
 block_button = pygame.Rect(200, 300, 100, 50)
 load_button = pygame.Rect(350, 300, 100, 50)
 restart_button = pygame.Rect(450, 300, 120, 50)
 name_input_box = pygame.Rect(200, 150, 200, 50)
 
-
 name_input_mode = True
 player_name = ""
 game_messages = []
 
 sprite_org = pygame.image.load("still_icon.png")
-sprite_scale = pygame.transform.scale(sprite_org, (150,150))
+sprite_scale = pygame.transform.scale(sprite_org, (150, 150))
 sprite_image = pygame.transform.flip(sprite_scale, True, False)
-
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, name, health, ammo, move):
@@ -67,6 +63,7 @@ class Player(pygame.sprite.Sprite):
                 pygame.transform.scale(pygame.image.load("dead.png").convert_alpha(), (150*scale_factor, 150*scale_factor)),
             ]
         }
+
         # Function to flip images
         def flip_images(images):
             return [pygame.transform.flip(img, True, False) for img in images]
@@ -75,7 +72,7 @@ class Player(pygame.sprite.Sprite):
         if name == "":  # Assuming player1 has an empty name initially
             for key in self.animations:
                 self.animations[key] = flip_images(self.animations[key])
-        
+
         self.current_animation = "idle"
         self.frame_index = 0
         self.animation_speed = 700  # Adjust speed of animation playback
@@ -94,8 +91,9 @@ class Player(pygame.sprite.Sprite):
             # Loop animation if needed
             if self.frame_index >= len(self.animations[self.current_animation]):
                 self.frame_index = 0
-                self.current_animation = "idle"  # Return to idle after animation completes
-                
+                if self.current_animation != "dead":
+                    self.current_animation = "idle"  # Return to idle after animation completes
+
             self.image = self.animations[self.current_animation][self.frame_index]
 
     def set_animation(self, action):
@@ -104,8 +102,6 @@ class Player(pygame.sprite.Sprite):
             self.current_animation = action
             self.frame_index = 0
             self.animation_counter = 0
-
-
 
 
 player1 = Player("", 100, 0, None)
@@ -136,7 +132,6 @@ def game_screen():
     draw_text("Load", (load_button.x + 15, load_button.y + 10), WHITE)
     draw_text("Restart", (restart_button.x + 10, restart_button.y + 10), WHITE)
 
-
     y_offset = 20  
     for msg in game_messages:
         draw_text(msg, (WIDTH // 2, y_offset))
@@ -155,27 +150,23 @@ def attack(attacker, defender):
         defender.health -= 100
         attacker.ammo -= 1
         if defender.health <= 0:
-            defender.set_animation("dead")
-        # add_message(f"{attacker.name} attacks! {defender.name} takes damage!")
+            defender.set_animation("dead")  # Change to dead animation
     elif attacker.ammo == 0:
         attacker.set_animation("idle")
         add_message(f"{attacker.name} has no ammo!")
     else:
         attacker.set_animation("attack")
         attacker.ammo -= 1
-        # add_message(f"{defender.name} blocks the attack!")
 
 def block(player):
     player.set_animation("block")
     player.move = "block"
-    # add_message(f"{player.name} blocks!")
 
 def load(player):
     player.move = "load"
     if player.ammo < 3:
         player.ammo += 1
         player.set_animation("load")
-        # add_message(f"{player.name} loads ammo!")
     else:
         player.set_animation("idle")
         add_message(f"{player.name} can't load more ammo!")
@@ -244,7 +235,7 @@ def instructions_screen():
 
         back_button = pygame.Rect(WIDTH // 2 - 50, 300, 100, 50)
         pygame.draw.rect(screen, RED, back_button)
-        screen.blit(FONT.render("Back", True, WHITE), (back_button.x + 20, back_button.y + 10))
+        screen.blit(FONT.render("Back", True, WHITE), (back_button.x + 30, back_button.y + 10))
 
         pygame.display.flip()
 
@@ -252,14 +243,15 @@ def instructions_screen():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
-            elif event.type == pygame.MOUSEBUTTONDOWN and back_button.collidepoint(event.pos):
-                instructions_running = False
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if back_button.collidepoint(event.pos):
+                    instructions_running = False
 
+# Main game loop
+running = True
+game_over = False
 
 menu_screen()
-
-game_over = False
-running = True
 
 while running:
     screen.fill(WHITE)
@@ -271,11 +263,9 @@ while running:
     else:
         game_screen()
 
-        # **Ensure animations update before drawing**
         player1.update_animation()
         player2.update_animation()
 
-        # **Draw updated sprites**
         screen.blit(player1.image, player1.rect.topleft)
         screen.blit(player2.image, (400, 100))
 
@@ -318,7 +308,6 @@ while running:
                     game_over = True
                     add_message("Game Over!")
 
-                    # Set dead animation for both players when they lose
                 if player1.health <= 0:
                     player1.set_animation("dead")
                 if player2.health <= 0:
@@ -328,9 +317,10 @@ while running:
             if restart_button.collidepoint(event.pos):
                 player1 = Player("", 100, 0, None)
                 player2 = Player("John", 100, 0, None)
-                name_input_mode=False
+                name_input_mode = False
                 game_over = False
                 game_messages.clear()
                 add_message("Game restarted!")
 
 pygame.quit()
+
