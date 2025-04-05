@@ -147,7 +147,7 @@ def attack(attacker, defender):
     attacker.move = "attack"
     if attacker.ammo >= 1 and defender.move != "block":
         attacker.set_animation("attack")
-        defender.health -= 100
+        defender.health -= 50
         attacker.ammo -= 1
         if defender.health <= 0:
             defender.set_animation("dead")  # Change to dead animation
@@ -270,6 +270,7 @@ while running:
         screen.blit(player2.image, (400, 100))
 
     pygame.display.flip()
+    print("flip")
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
